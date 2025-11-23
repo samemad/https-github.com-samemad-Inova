@@ -27,6 +27,10 @@ public sealed class RegisterRequestDto
         if (string.IsNullOrWhiteSpace(Role))
             return false;
 
+        if (!Role.Equals("Customer", StringComparison.OrdinalIgnoreCase) &&
+        !Role.Equals("Consultant", StringComparison.OrdinalIgnoreCase))
+            return false;
+
         // If registering as Consultant, validate consultant fields
         if (Role.Equals("Consultant", StringComparison.OrdinalIgnoreCase))
         {
@@ -54,14 +58,18 @@ public sealed class RegisterRequestDto
         if (string.IsNullOrWhiteSpace(Password))
             return "Password is required";
 
-        if (Password.Length < 6)
-            return "Password must be at least 6 characters";
+        if (Password.Length < 9)
+            return "Password must be at least 9 characters";
 
         if (string.IsNullOrWhiteSpace(FullName))
             return "Full name is required";
 
         if (string.IsNullOrWhiteSpace(Role))
             return "Role is required (Customer or Consultant)";
+
+        if (!Role.Equals("Customer", StringComparison.OrdinalIgnoreCase) &&
+    !Role.Equals("Consultant", StringComparison.OrdinalIgnoreCase))
+            return "Invalid role. Only 'Customer' or 'Consultant' are allowed";
 
         if (Role.Equals("Consultant", StringComparison.OrdinalIgnoreCase))
         {

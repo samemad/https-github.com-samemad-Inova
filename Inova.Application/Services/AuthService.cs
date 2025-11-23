@@ -1,6 +1,7 @@
 using BCrypt.Net;
 using Inova.Application.DTOs.Auth;
 using Inova.Application.Interfaces;
+using Inova.Application.Converters;  // ← ADD THIS!
 using Inova.Domain.Entities;
 using Inova.Domain.Repositories;
 
@@ -52,31 +53,19 @@ internal sealed class AuthService : IAuthService
         // 3. Hash password
         var passwordHash = BCrypt.Net.BCrypt.HashPassword(requestDto.Password);
 
-        // 4. Create User entity
-        var user = new User
-        {
-            Email = requestDto.Email,
-            PasswordHash = passwordHash,
-            Role = requestDto.Role,
-            IsActive = true,
-            CreatedAt = DateTime.UtcNow
-        };
-
+        // 4. Convert DTO to User Entity using converter 
+        var user = requestDto.ToUserEntity(passwordHash);
         await _userRepository.AddAsync(user);
 
         // 5. Create Customer or Consultant profile
         int profileId = 0;
         string approvalStatus = null;
+        string message = "Registration successful!";
 
         if (requestDto.Role.Equals("Customer", StringComparison.OrdinalIgnoreCase))
         {
-            var customer = new Customer
-            {
-                UserId = user.Id,
-                FullName = requestDto.FullName,
-                PhoneNumber = requestDto.PhoneNumber
-            };
-
+            // Convert to Customer entity using converter 
+            var customer = requestDto.ToCustomerEntity(user.Id);
             await _customerRepository.AddAsync(customer);
             profileId = customer.Id;
 
@@ -85,23 +74,12 @@ internal sealed class AuthService : IAuthService
         }
         else if (requestDto.Role.Equals("Consultant", StringComparison.OrdinalIgnoreCase))
         {
-            var consultant = new Consultant
-            {
-                UserId = user.Id,
-                FullName = requestDto.FullName,
-                PhoneNumber = requestDto.PhoneNumber,
-                SpecializationId = requestDto.SpecializationId.Value,
-                Bio = requestDto.Bio,
-                YearsOfExperience = requestDto.YearsOfExperience.Value,
-                HourlyRate = 0, // Will be set by admin
-                ApprovalStatus = "Pending",
-                IsApproved = false,
-                CreatedAt = DateTime.UtcNow
-            };
-
+            // Convert to Consultant entity using converter 
+            var consultant = requestDto.ToConsultantEntity(user.Id);
             await _consultantRepository.AddAsync(consultant);
             profileId = consultant.Id;
             approvalStatus = "Pending";
+            message = "Registration successful! Your application is pending approval.";
 
             // Send welcome email with approval notice
             await _emailService.SendEmailAsync(
@@ -120,21 +98,14 @@ internal sealed class AuthService : IAuthService
             profileId
         );
 
-        // 7. Return response
-        return new AuthResponseDto
-        {
-            Token = token,
-            Email = user.Email,
-            FullName = requestDto.FullName,
-            Role = user.Role,
-            UserId = user.Id,
-            ProfileId = profileId,
-            ExpiresAt = DateTime.UtcNow.AddHours(24),
-            Message = requestDto.Role.Equals("Consultant", StringComparison.OrdinalIgnoreCase)
-                ? "Registration successful! Your application is pending approval."
-                : "Registration successful!",
-            ApprovalStatus = approvalStatus
-        };
+        // 7. Convert to AuthResponseDto using converter 
+        return user.ToAuthResponseDto(
+            token,
+            requestDto.FullName,
+            profileId,
+            message,
+            approvalStatus
+        );
     }
 
     public async Task<AuthResponseDto> LoginAsync(LoginRequestDto requestDto)
@@ -211,18 +182,13 @@ internal sealed class AuthService : IAuthService
             profileId
         );
 
-        // 7. Return response
-        return new AuthResponseDto
-        {
-            Token = token,
-            Email = user.Email,
-            FullName = fullName,
-            Role = user.Role,
-            UserId = user.Id,
-            ProfileId = profileId,
-            ExpiresAt = DateTime.UtcNow.AddHours(24),
-            Message = "Login successful",
-            ApprovalStatus = approvalStatus
-        };
+        // 7. Convert to AuthResponseDto using converter 
+        return user.ToAuthResponseDto(
+            token,
+            fullName,
+            profileId,
+            "Login successful",
+            approvalStatus
+        );
     }
 }

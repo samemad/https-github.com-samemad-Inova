@@ -1,64 +1,112 @@
-//using Inova.Application.DTOs.Consultant;
-//using Inova.Application.Interfaces;
-//using Inova.Application.Converters;
-//using Inova.Domain.Repositories;
+using Inova.Application.DTOs.Consultant;
+using Inova.Application.Interfaces;
+using Inova.Application.Converters;
+using Inova.Domain.Repositories;
 
-//namespace Inova.Application.Services;
+namespace Inova.Application.Services;
 
-//internal sealed class ConsultantService : IConsultantService
-//{
-//    private readonly IConsultantRepository _consultantRepository;
-//    private readonly IEmailService _emailService;
+internal sealed class ConsultantService : IConsultantService
+{
+    private readonly IConsultantRepository _consultantRepository;
+    private readonly IEmailService _emailService;
 
-//    public ConsultantService(
-//        IConsultantRepository consultantRepository,
-//        IEmailService emailService)
-//    {
-//        _consultantRepository = consultantRepository;
-//        _emailService = emailService;
-//    }
+    public ConsultantService(
+        IConsultantRepository consultantRepository,
+        IEmailService emailService)
+    {
+        _consultantRepository = consultantRepository;
+        _emailService = emailService;
+    }
 
-//    public async Task<IEnumerable<ConsultantDto>> GetPendingConsultantsAsync()
-//    {
-//        // 1. Get all pending consultants from repository
-//        var pendingConsultants = await _consultantRepository.GetPendingApprovalAsync();
+    // ═══════════════════════════════════════════════════════════
+    // GET PENDING CONSULTANTS (Admin Only)
+    // ═══════════════════════════════════════════════════════════
+    public async Task<IEnumerable<ConsultantDto>> GetPendingConsultantsAsync()
+    {
+        var pendingConsultants = await _consultantRepository.GetPendingApprovalAsync();
+        return pendingConsultants.Select(c => c.ToDto());
+    }
 
-//        // 2. Convert each to DTO using converter
-//        var consultantDtos = pendingConsultants.Select(c => c.ToDto());
+    // ═══════════════════════════════════════════════════════════
+    // GET CONSULTANT BY ID
+    // ═══════════════════════════════════════════════════════════
+    public async Task<ConsultantDto> GetConsultantByIdAsync(int id)
+    {
+        var consultant = await _consultantRepository.GetByIdAsync(id);
 
-//        // 3. Return list
-//        return consultantDtos;
-//    }
+        if (consultant == null)
+        {
+            throw new InvalidOperationException($"Consultant with ID {id} not found");
+        }
 
-//   // public async Task<ConsultantDto> GetConsultantByIdAsync(int id)
-//    {
-//        // TODO:
-//        // 1. Get consultant by ID from repository
-//        // 2. Check if null
-//        // 3. Convert to DTO
-//        // 4. Return
-//    }
+        return consultant.ToDto();
+    }
 
-//   // public async Task<bool> ApproveConsultantAsync(int id)
-//    {
-//        // TODO:
-//        // 1. Get consultant by ID
-//        // 2. Check if null
-//        // 3. Check if already approved
-//        // 4. Update: IsApproved = true, ApprovalStatus = "Approved", ApprovedAt = DateTime.UtcNow
-//        // 5. Save to repository
-//        // 6. Send approval email
-//        // 7. Return true
-//    }
+    // ═══════════════════════════════════════════════════════════
+    // APPROVE CONSULTANT
+    // ═══════════════════════════════════════════════════════════
+    public async Task<bool> ApproveConsultantAsync(int id)
+    {
+        // 1. Get consultant
+        var consultant = await _consultantRepository.GetByIdAsync(id);
 
-//    //public async Task<bool> RejectConsultantAsync(int id)
-//    {
-//        // TODO:
-//        // 1. Get consultant by ID
-//        // 2. Check if null
-//        // 3. Update: IsApproved = false, ApprovalStatus = "Rejected"
-//        // 4. Save to repository
-//        // 5. Send rejection email
-//        // 6. Return true
-//    }
-//}
+        if (consultant == null)
+        {
+            throw new InvalidOperationException($"Consultant with ID {id} not found");
+        }
+
+        // 2. Check if already approved
+        if (consultant.IsApproved)
+        {
+            throw new InvalidOperationException("Consultant is already approved");
+        }
+
+        // 3. Update approval status
+        consultant.IsApproved = true;
+        consultant.ApprovalStatus = "Approved";
+        consultant.ApprovedAt = DateTime.UtcNow;
+
+        // 4. Save changes
+        await _consultantRepository.UpdateAsync(consultant);
+
+        // 5. Send approval email
+        await _emailService.SendConsultantApprovalEmailAsync(
+            consultant.User.Email,
+            consultant.FullName,
+            isApproved: true
+        );
+
+        return true;
+    }
+
+    // ═══════════════════════════════════════════════════════════
+    // REJECT CONSULTANT
+    // ═══════════════════════════════════════════════════════════
+    public async Task<bool> RejectConsultantAsync(int id)
+    {
+        // 1. Get consultant
+        var consultant = await _consultantRepository.GetByIdAsync(id);
+
+        if (consultant == null)
+        {
+            throw new InvalidOperationException($"Consultant with ID {id} not found");
+        }
+
+        // 2. Update rejection status
+        consultant.IsApproved = false;
+        consultant.ApprovalStatus = "Rejected";
+        consultant.ApprovedAt = null;  // Clear approval date if exists
+
+        // 3. Save changes
+        await _consultantRepository.UpdateAsync(consultant);
+
+        // 4. Send rejection email
+        await _emailService.SendConsultantApprovalEmailAsync(
+            consultant.User.Email,
+            consultant.FullName,
+            isApproved: false
+        );
+
+        return true;
+    }
+}

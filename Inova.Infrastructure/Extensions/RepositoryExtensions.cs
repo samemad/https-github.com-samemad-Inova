@@ -11,6 +11,8 @@ public static class RepositoryExtensions
         services.AddScoped<IUserRepository, UserRepository>();
         services.AddScoped<ICustomerRepository, CustomerRepository>();
         services.AddScoped<IConsultantRepository, ConsultantRepository>();
+        services.AddScoped<ICategoryRepository, CategoryRepository>();
+        services.AddScoped<ISpecializationRepository, SpecializationRepository>();
 
         // We'll add more later as needed
 

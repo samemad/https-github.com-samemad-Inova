@@ -1,0 +1,15 @@
+
+this project has been develpoed using clean Archtecture with SOLID Prnciple ! 
+in order to be able to understand the ASP.Net , U have to llearn the C# from W3School or any other platform cuz the .NET here is about 90% C# language
+it is important to understand the C# language first with the OOP concepts !! 
+After u have done with the C# , OOP . then U have to understand the SOLID Priniple cuz they explain the OOP in more advance and applying OOP concespts !
+then u have to learn the clean Archtecture in order to understand how to structure the project in a more professional way 
+clean Archtecture is only 4 seprate layers , each Layer has its job , their benifits to be able o maintain the project in a more easier way
+and to be able to test the project in a more easier way
+and to be able to develope the project in a more easier way
+even if u  want to changw the DB , u have only to change the infra layer without touching the other layers!!
+if u do not understand any of the above concepts , u will find it hard to understand the project strucutre and the code it self !!
+so u have to learn them first before u start to understand the project one by one ! 
+C# >> OOP >> SOLID >> Clean Archtecture >> ASP.Net Core 
+if u do not understand anything cotnact me ^^ Alsamemad775@gmail.com 
+wish u all the best

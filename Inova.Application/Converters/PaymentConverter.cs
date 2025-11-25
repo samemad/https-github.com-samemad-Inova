@@ -15,7 +15,9 @@ internal static class PaymentConverter
             SessionId = entity.SessionId,
             Amount = entity.Amount,
             Status = entity.Status,
-            CreatedAt = entity.CreatedAt
+            CreatedAt = entity.CreatedAt,
+            CapturedAt = entity.CapturedAt,   
+            ReleasedAt = entity.ReleasedAt
 
         };
     }

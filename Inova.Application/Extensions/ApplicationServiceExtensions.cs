@@ -10,8 +10,11 @@ public static class ApplicationServiceExtensions
     {
         services.AddScoped<IAuthService, AuthService>();
         services.AddScoped<ICategoryService, CategoryService>();
-        services.AddScoped<ISpecializationService, SpecializationService>();  // ← ADD THIS
-        services.AddScoped<IConsultantService, ConsultantService>();          // ← ADD THIS
+        services.AddScoped<ISpecializationService, SpecializationService>();  
+        services.AddScoped<IConsultantService, ConsultantService>();          
+        services.AddScoped<IPaymentService, PaymentService>();  
+        services.AddScoped<ISessionService, SessionService>();  
+
 
 
         // We'll add more services later

@@ -102,4 +102,76 @@ internal sealed class EmailService : IEmailService
 
         await SendEmailAsync(to, subject, body);
     }
+
+    public async Task SendSessionBookedEmailAsync(
+        string consultantEmail,
+        string customerName,
+        DateTime scheduledDate,
+        TimeSpan scheduledTime)
+    {
+        var subject = "New Session Booking Request 📅";
+        var body = $@"
+        <html>
+        <body>
+            <h2>New Session Request</h2>
+            <p>You have received a new session booking request from <strong>{customerName}</strong>.</p>
+            <p><strong>Scheduled Date:</strong> {scheduledDate:yyyy-MM-dd}</p>
+            <p><strong>Scheduled Time:</strong> {scheduledTime}</p>
+            <p>Please log in to your dashboard to accept or deny this request.</p>
+            <br/>
+            <p>Best regards,</p>
+            <p><strong>Inova Team</strong></p>
+        </body>
+        </html>
+    ";
+
+        await SendEmailAsync(consultantEmail, subject, body);
+    }
+
+    public async Task SendSessionAcceptedEmailAsync(
+        string customerEmail,
+        string consultantName,
+        DateTime scheduledDate,
+        TimeSpan scheduledTime)
+    {
+        var subject = "Session Accepted ✅";
+        var body = $@"
+        <html>
+        <body>
+            <h2>Great News!</h2>
+            <p><strong>{consultantName}</strong> has accepted your session request.</p>
+            <p><strong>Scheduled Date:</strong> {scheduledDate:yyyy-MM-dd}</p>
+            <p><strong>Scheduled Time:</strong> {scheduledTime}</p>
+            <p>Your payment has been processed successfully.</p>
+            <br/>
+            <p>Best regards,</p>
+            <p><strong>Inova Team</strong></p>
+        </body>
+        </html>
+    ";
+
+        await SendEmailAsync(customerEmail, subject, body);
+    }
+
+    public async Task SendSessionDeniedEmailAsync(
+        string customerEmail,
+        string consultantName)
+    {
+        var subject = "Session Request Declined ❌";
+        var body = $@"
+        <html>
+        <body>
+            <h2>Session Update</h2>
+            <p>Unfortunately, <strong>{consultantName}</strong> has declined your session request.</p>
+            <p>Your payment has been fully refunded.</p>
+            <p>Please feel free to book with another consultant.</p>
+            <br/>
+            <p>Best regards,</p>
+            <p><strong>Inova Team</strong></p>
+        </body>
+        </html>
+    ";
+
+        await SendEmailAsync(customerEmail, subject, body);
+    }
 }

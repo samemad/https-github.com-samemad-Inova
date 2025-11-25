@@ -5,4 +5,8 @@
     public decimal Amount { get; set; }
     public string Status { get; set; } 
     public DateTime CreatedAt { get; set; }  
+
+    public DateTime? CapturedAt { get; set; }
+
+    public DateTime? ReleasedAt { get; set; }
 }

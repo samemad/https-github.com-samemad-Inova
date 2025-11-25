@@ -13,3 +13,58 @@ so u have to learn them first before u start to understand the project one by on
 C# >> OOP >> SOLID >> Clean Archtecture >> ASP.Net Core 
 if u do not understand anything cotnact me ^^ Alsamemad775@gmail.com 
 wish u all the best
+
+in the session and payment I was thought that the payment sevices must be in th infra Layer ! but there r 2 types of payment services!
+┌─────────────────────────────────────────────────────────────┐
+│                    APPLICATION LAYER                         │
+├─────────────────────────────────────────────────────────────┤
+│                                                              │
+│  SessionService.cs                                           │
+│  ├─ BookSessionAsync()                                       │
+│  │   ├─ Calculate amount                                    │
+│  │   ├─ Create Session                                      │
+│  │   └─ Call → _paymentService.HoldPaymentAsync()          │
+│  │                                                           │
+│  ├─ AcceptSessionAsync()                                     │
+│  │   └─ Call → _paymentService.CapturePaymentAsync()       │
+│  │                                                           │
+│  └─ DenySessionAsync()                                       │
+│      └─ Call → _paymentService.ReleasePaymentAsync()        │
+│                                                              │
+│  ════════════════════════════════════════════════════════   │
+│                                                              │
+│  PaymentService.cs ← Business Logic (Application Layer)     │
+│  ├─ HoldPaymentAsync()                                       │
+│  │   ├─ Create Payment record (Status: "Held")             │
+│  │   └─ Call → _paymentGateway.AuthorizeAsync() ─┐         │
+│  │                                                 │         │
+│  ├─ CapturePaymentAsync()                         │         │
+│  │   ├─ Update Payment (Status: "Captured")       │         │
+│  │   └─ Call → _paymentGateway.CaptureAsync() ────┤         │
+│  │                                                 │         │
+│  └─ ReleasePaymentAsync()                         │         │
+│      ├─ Update Payment (Status: "Released")       │         │
+│      └─ Call → _paymentGateway.VoidAsync() ───────┤         │
+│                                                    │         │
+└────────────────────────────────────────────────────┼─────────┘
+                                                     │
+                    ┌────────────────────────────────┘
+                    ↓
+┌─────────────────────────────────────────────────────────────┐
+│                  INFRASTRUCTURE LAYER                        │
+├─────────────────────────────────────────────────────────────┤
+│                                                              │
+│  IPaymentGateway (Interface in Application)                 │
+│  └─ AuthorizeAsync()   ← Hold money                         │
+│  └─ CaptureAsync()     ← Charge money                       │
+│  └─ VoidAsync()        ← Release money                      │
+│                                                              │
+│  ════════════════════════════════════════════════════════   │
+│                                                              │
+│  StripePaymentGateway.cs (Implementation in Infrastructure) │
+│  └─ Calls Stripe API                                        │
+│                                                              │
+│  PayPalPaymentGateway.cs (Another implementation)           │
+│  └─ Calls PayPal API                                        │
+│                                                              │
+└─────────────────────────────────────────────────────────────┘

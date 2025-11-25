@@ -5,9 +5,9 @@ namespace Inova.Application.Converters;
 
 internal static class SpecializationConverter
 {
-    // ═══════════════════════════════════════════════════════════
+    
     // Direction 1: CreateDTO → Entity (for CREATE)
-    // ═══════════════════════════════════════════════════════════
+   
     public static Specialization ToEntity(this SpecializationCreateDto dto)
     {
         return new Specialization
@@ -21,9 +21,9 @@ internal static class SpecializationConverter
         };
     }
 
-    // ═══════════════════════════════════════════════════════════
+    
     // Direction 2: Entity → ResponseDTO (for READ)
-    // ═══════════════════════════════════════════════════════════
+  
     public static SpecializationResponseDto ToResponseDto(this Specialization entity)
     {
         return new SpecializationResponseDto
@@ -37,9 +37,9 @@ internal static class SpecializationConverter
         };
     }
 
-    // ═══════════════════════════════════════════════════════════
+    
     // Direction 3: UpdateDTO → Entity (for UPDATE)
-    // ═══════════════════════════════════════════════════════════
+   
     public static void UpdateEntity(this SpecializationUpdateRequestDto dto, Specialization entity)
     {
         entity.CategoryId = dto.CategoryId;

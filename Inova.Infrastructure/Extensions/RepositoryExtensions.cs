@@ -13,6 +13,8 @@ public static class RepositoryExtensions
         services.AddScoped<IConsultantRepository, ConsultantRepository>();
         services.AddScoped<ICategoryRepository, CategoryRepository>();
         services.AddScoped<ISpecializationRepository, SpecializationRepository>();
+        services.AddScoped<ISessionRepository, SessionRepository>();
+        services.AddScoped<IPaymentRepository, PaymentRepository>();
 
         // We'll add more later as needed
 

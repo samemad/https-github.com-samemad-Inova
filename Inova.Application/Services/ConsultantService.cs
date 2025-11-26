@@ -18,18 +18,15 @@ internal sealed class ConsultantService : IConsultantService
         _emailService = emailService;
     }
 
-    // ═══════════════════════════════════════════════════════════
     // GET PENDING CONSULTANTS (Admin Only)
-    // ═══════════════════════════════════════════════════════════
     public async Task<IEnumerable<ConsultantDto>> GetPendingConsultantsAsync()
     {
         var pendingConsultants = await _consultantRepository.GetPendingApprovalAsync();
         return pendingConsultants.Select(c => c.ToDto());
     }
 
-    // ═══════════════════════════════════════════════════════════
+    
     // GET CONSULTANT BY ID
-    // ═══════════════════════════════════════════════════════════
     public async Task<ConsultantDto> GetConsultantByIdAsync(int id)
     {
         var consultant = await _consultantRepository.GetByIdAsync(id);
@@ -42,9 +39,7 @@ internal sealed class ConsultantService : IConsultantService
         return consultant.ToDto();
     }
 
-    // ═══════════════════════════════════════════════════════════
     // APPROVE CONSULTANT
-    // ═══════════════════════════════════════════════════════════
     public async Task<bool> ApproveConsultantAsync(int id)
     {
         // 1. Get consultant
@@ -79,9 +74,7 @@ internal sealed class ConsultantService : IConsultantService
         return true;
     }
 
-    // ═══════════════════════════════════════════════════════════
     // REJECT CONSULTANT
-    // ═══════════════════════════════════════════════════════════
     public async Task<bool> RejectConsultantAsync(int id)
     {
         // 1. Get consultant

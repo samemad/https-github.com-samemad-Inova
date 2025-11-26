@@ -14,9 +14,7 @@ internal sealed class CategoryService : ICategoryService
         _categoryRepository = categoryRepository;
     }
 
-    // ═══════════════════════════════════════════════════════════
     // GET BY ID
-    // ═══════════════════════════════════════════════════════════
     public async Task<CategoryResponseDto> GetByIdAsync(int id)
     {
         // 1. Get entity from repository
@@ -32,9 +30,7 @@ internal sealed class CategoryService : ICategoryService
         return category.ToResponseDto();
     }
 
-    // ═══════════════════════════════════════════════════════════
     // GET ALL
-    // ═══════════════════════════════════════════════════════════
     public async Task<IEnumerable<CategoryResponseDto>> GetAllAsync()
     {
         // 1. Get all entities from repository
@@ -49,9 +45,7 @@ internal sealed class CategoryService : ICategoryService
         // Returns a list of DTOs
     }
 
-    // ═══════════════════════════════════════════════════════════
     // CREATE
-    // ═══════════════════════════════════════════════════════════
     public async Task<CategoryResponseDto> CreateAsync(CategoryCreateRequestDto dto)
     {
         // 1. Validate DTO (basic checks)
@@ -75,9 +69,7 @@ internal sealed class CategoryService : ICategoryService
         return category.ToResponseDto();
     }
 
-    // ═══════════════════════════════════════════════════════════
     // UPDATE
-    // ═══════════════════════════════════════════════════════════
     public async Task<CategoryResponseDto> UpdateAsync(CategoryUpdateRequestDto dto)
     {
         // 1. Get existing entity from database
@@ -99,9 +91,7 @@ internal sealed class CategoryService : ICategoryService
         return category.ToResponseDto();
     }
 
-    // ═══════════════════════════════════════════════════════════
     // DELETE
-    // ═══════════════════════════════════════════════════════════
     public async Task<bool> DeleteAsync(int id)
     {
         // 1. Check if exists

@@ -18,9 +18,7 @@ internal sealed class SpecializationService : ISpecializationService
         _categoryRepository = categoryRepository;
     }
 
-    // ═══════════════════════════════════════════════════════════
     // GET BY ID
-    // ═══════════════════════════════════════════════════════════
     public async Task<SpecializationResponseDto> GetByIdAsync(int id)
     {
         var specialization = await _specializationRepository.GetByIdAsync(id);
@@ -33,18 +31,14 @@ internal sealed class SpecializationService : ISpecializationService
         return specialization.ToResponseDto();
     }
 
-    // ═══════════════════════════════════════════════════════════
     // GET ALL
-    // ═══════════════════════════════════════════════════════════
     public async Task<IEnumerable<SpecializationResponseDto>> GetAllAsync()
     {
         var specializations = await _specializationRepository.GetAllAsync();
         return specializations.Select(s => s.ToResponseDto());
     }
 
-    // ═══════════════════════════════════════════════════════════
     // GET BY CATEGORY ID (FILTER)
-    // ═══════════════════════════════════════════════════════════
     public async Task<IEnumerable<SpecializationResponseDto>> GetByCategoryIdAsync(int categoryId)
     {
         // First check if category exists
@@ -58,9 +52,7 @@ internal sealed class SpecializationService : ISpecializationService
         return specializations.Select(s => s.ToResponseDto());
     }
 
-    // ═══════════════════════════════════════════════════════════
     // CREATE
-    // ═══════════════════════════════════════════════════════════
     public async Task<SpecializationResponseDto> CreateAsync(SpecializationCreateDto dto)
     {
         // Validate
@@ -88,9 +80,7 @@ internal sealed class SpecializationService : ISpecializationService
         return specialization.ToResponseDto();
     }
 
-    // ═══════════════════════════════════════════════════════════
     // UPDATE
-    // ═══════════════════════════════════════════════════════════
     public async Task<SpecializationResponseDto> UpdateAsync(SpecializationUpdateRequestDto dto)
     {
         // Get existing
@@ -117,9 +107,7 @@ internal sealed class SpecializationService : ISpecializationService
         return specialization.ToResponseDto();
     }
 
-    // ═══════════════════════════════════════════════════════════
     // DELETE
-    // ═══════════════════════════════════════════════════════════
     public async Task<bool> DeleteAsync(int id)
     {
         var specialization = await _specializationRepository.GetByIdAsync(id);

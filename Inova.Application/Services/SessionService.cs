@@ -26,10 +26,7 @@ internal sealed class SessionService : ISessionService
         _paymentService = paymentService;
         _emailService = emailService;
     }
-
-    // ═══════════════════════════════════════════════════════════
     // BOOK SESSION (Customer books a session)
-    // ═══════════════════════════════════════════════════════════
     public async Task<SessionResponseDto> BookSessionAsync(BookSessionRequestDto dto, int customerId)
     {
         // 1. Validate consultant exists and is approved
@@ -83,9 +80,8 @@ internal sealed class SessionService : ISessionService
         return session.ToResponseDto();
     }
 
-    // ═══════════════════════════════════════════════════════════
+    
     // ACCEPT SESSION (Consultant accepts)
-    // ═══════════════════════════════════════════════════════════
     public async Task<bool> AcceptSessionAsync(int sessionId, int consultantId)
     {
         // 1. Get session with details
@@ -128,9 +124,7 @@ internal sealed class SessionService : ISessionService
         return true;
     }
 
-    // ═══════════════════════════════════════════════════════════
     // DENY SESSION (Consultant denies)
-    // ═══════════════════════════════════════════════════════════
     public async Task<bool> DenySessionAsync(int sessionId, int consultantId)
     {
         // 1. Get session with details
@@ -170,36 +164,29 @@ internal sealed class SessionService : ISessionService
         return true;
     }
 
-    // ═══════════════════════════════════════════════════════════
+    
     // GET MY SESSIONS (Customer views their sessions)
-    // ═══════════════════════════════════════════════════════════
     public async Task<IEnumerable<SessionResponseDto>> GetMySessionsAsync(int customerId)
     {
         var sessions = await _sessionRepository.GetByCustomerIdAsync(customerId);
         return sessions.Select(s => s.ToResponseDto());
     }
 
-    // ═══════════════════════════════════════════════════════════
     // GET MY CONSULTANT SESSIONS (Consultant views all their sessions)
-    // ═══════════════════════════════════════════════════════════
     public async Task<IEnumerable<SessionResponseDto>> GetMyConsultantSessionsAsync(int consultantId)
     {
         var sessions = await _sessionRepository.GetByConsultantIdAsync(consultantId);
         return sessions.Select(s => s.ToResponseDto());
     }
 
-    // ═══════════════════════════════════════════════════════════
     // GET PENDING SESSIONS (Consultant views pending sessions only)
-    // ═══════════════════════════════════════════════════════════
     public async Task<IEnumerable<SessionResponseDto>> GetPendingSessionsAsync(int consultantId)
     {
         var sessions = await _sessionRepository.GetPendingByConsultantIdAsync(consultantId);
         return sessions.Select(s => s.ToResponseDto());
     }
 
-    // ═══════════════════════════════════════════════════════════
     // GET SESSION BY ID
-    // ═══════════════════════════════════════════════════════════
     public async Task<SessionResponseDto> GetSessionByIdAsync(int id)
     {
         var session = await _sessionRepository.GetByIdAsync(id);
@@ -212,9 +199,8 @@ internal sealed class SessionService : ISessionService
         return session.ToResponseDto();
     }
 
-    // ═══════════════════════════════════════════════════════════
+    
     // CANCEL SESSION (Customer cancels)
-    // ═══════════════════════════════════════════════════════════
     public async Task<bool> CancelSessionAsync(int sessionId, int customerId)
     {
         var session = await _sessionRepository.GetByIdAsync(sessionId);

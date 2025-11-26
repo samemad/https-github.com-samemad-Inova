@@ -15,6 +15,7 @@ public static class RepositoryExtensions
         services.AddScoped<ISpecializationRepository, SpecializationRepository>();
         services.AddScoped<ISessionRepository, SessionRepository>();
         services.AddScoped<IPaymentRepository, PaymentRepository>();
+        services.AddScoped<IChatMessageRepository, ChatMessageRepository>();
 
         // We'll add more later as needed
 

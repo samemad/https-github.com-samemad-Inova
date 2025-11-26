@@ -51,9 +51,7 @@ internal sealed class PaymentService : IPaymentService
         return payment.ToResponseDto();
     }
 
-    // ═══════════════════════════════════════════════════════════
     // CAPTURE PAYMENT (Take the money - session accepted)
-    // ═══════════════════════════════════════════════════════════
     public async Task<PaymentResponseDto> CapturePaymentAsync(int paymentId)
     {
         // 1. Get payment from database
@@ -84,9 +82,7 @@ internal sealed class PaymentService : IPaymentService
         return payment.ToResponseDto();
     }
 
-    // ═══════════════════════════════════════════════════════════
     // RELEASE PAYMENT (Return the money - session denied)
-    // ═══════════════════════════════════════════════════════════
     public async Task<PaymentResponseDto> ReleasePaymentAsync(int paymentId)
     {
         // 1. Get payment from database
@@ -117,9 +113,7 @@ internal sealed class PaymentService : IPaymentService
         return payment.ToResponseDto();
     }
 
-    // ═══════════════════════════════════════════════════════════
     // GET PAYMENT BY SESSION ID
-    // ═══════════════════════════════════════════════════════════
     public async Task<PaymentResponseDto> GetPaymentBySessionIdAsync(int sessionId)
     {
         // 1. Get payment from database

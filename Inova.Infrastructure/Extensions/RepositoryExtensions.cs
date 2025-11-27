@@ -17,8 +17,6 @@ public static class RepositoryExtensions
         services.AddScoped<IPaymentRepository, PaymentRepository>();
         services.AddScoped<IChatMessageRepository, ChatMessageRepository>();
 
-        // We'll add more later as needed
-
         return services;
     }
 }

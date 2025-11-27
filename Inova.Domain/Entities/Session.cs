@@ -29,4 +29,9 @@ public class Session
 
     // Navigation: Session has many ChatMessages
     public ICollection<ChatMessage> ChatMessages { get; set; }
+
+    public bool IsUnderReview { get; set; }  // Default: false
+    public string? ReportReason { get; set; }  // Why reported?
+    public int? ReportedBy { get; set; }  // Who reported (UserId)
+    public DateTime? ReportedAt { get; set; }  // When reported?
 }

@@ -14,6 +14,7 @@ public static class ApplicationServiceExtensions
         services.AddScoped<IConsultantService, ConsultantService>();          
         services.AddScoped<IPaymentService, PaymentService>();  
         services.AddScoped<ISessionService, SessionService>();  
+        services.AddScoped<IChatService, ChatService>();
 
 
 

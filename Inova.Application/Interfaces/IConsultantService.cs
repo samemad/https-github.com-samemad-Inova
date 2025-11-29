@@ -8,4 +8,8 @@ public interface IConsultantService
 	Task<ConsultantDto> GetConsultantByIdAsync(int id);
 	Task<bool> ApproveConsultantAsync(int id);
 	Task<bool> RejectConsultantAsync(int id);
+
+    Task<ConsultantPublicProfileDto> GetConsultantPublicProfileAsync(int id);
+    Task<IEnumerable<ConsultantPublicProfileDto>> GetAllApprovedConsultantsAsync();
+    Task<IEnumerable<ConsultantPublicProfileDto>> GetConsultantsBySpecializationAsync(int specializationId);
 }

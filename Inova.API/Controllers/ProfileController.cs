@@ -1,8 +1,10 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using Inova.Application.DTOs.Profile;
+using Inova.Application.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
-using Inova.Application.DTOs.Profile;
-using Inova.Application.Interfaces;
+using System.Text.Json;
+
 
 namespace Inova.API.Controllers;
 
@@ -48,37 +50,31 @@ public class ProfileController : ControllerBase
     }
 
     // PUT: api/profile/me
+    
     [HttpPut("me")]
-    public async Task<IActionResult> UpdateMyProfile([FromBody] object updateDto)
+    public async Task<IActionResult> UpdateMyProfile([FromBody] JsonElement updateDto)
     {
         try
         {
-            // Get userId and role from JWT token
             var userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
             var role = User.FindFirstValue(ClaimTypes.Role);
 
-            // Deserialize to correct DTO based on role
             object dto;
             if (role == "Customer")
             {
-                dto = System.Text.Json.JsonSerializer.Deserialize<UpdateCustomerProfileDto>(
-                    updateDto.ToString(),
-                    new System.Text.Json.JsonSerializerOptions { PropertyNameCaseInsensitive = true }
-                );
+                dto = JsonSerializer.Deserialize<UpdateCustomerProfileDto>(
+                    updateDto.GetRawText());
             }
             else if (role == "Consultant")
             {
-                dto = System.Text.Json.JsonSerializer.Deserialize<UpdateConsultantProfileDto>(
-                    updateDto.ToString(),
-                    new System.Text.Json.JsonSerializerOptions { PropertyNameCaseInsensitive = true }
-                );
+                dto = JsonSerializer.Deserialize<UpdateConsultantProfileDto>(
+                    updateDto.GetRawText());
             }
             else
             {
                 return BadRequest(new { success = false, message = "Invalid role" });
             }
 
-            // Update profile
             var updatedProfile = await _profileService.UpdateMyProfileAsync(userId, role, dto);
 
             return Ok(new
@@ -90,11 +86,7 @@ public class ProfileController : ControllerBase
         }
         catch (Exception ex)
         {
-            return BadRequest(new
-            {
-                success = false,
-                message = ex.Message
-            });
+            return BadRequest(new { success = false, message = ex.Message });
         }
     }
 

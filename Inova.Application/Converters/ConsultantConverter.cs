@@ -23,4 +23,23 @@ internal static class ConsultantConverter
             ApprovedAt = consultant.ApprovedAt
         };
     }
+
+    // Add this to your existing ConsultantConverter class
+
+    public static ConsultantPublicProfileDto ToPublicProfileDto(this Consultant consultant)
+    {
+        return new ConsultantPublicProfileDto
+        {
+            Id = consultant.Id,
+            FullName = consultant.FullName,
+            SpecializationName = consultant.Specialization?.NameEn ?? string.Empty,
+            Bio = consultant.Bio ?? string.Empty,
+            YearsOfExperience = consultant.YearsOfExperience,
+            HourlyRate = consultant.HourlyRate,
+            ProfileImageUrl = consultant.ProfileImageUrl ?? string.Empty,
+            CoverImageUrl = consultant.CoverImageUrl ?? string.Empty,
+            TotalSessions = consultant.Sessions?.Count(s => s.Status == "Completed") ?? 0,
+            Rating = 0.0  // Future feature
+        };
+    }
 }

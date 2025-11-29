@@ -126,4 +126,76 @@ public class ConsultantController : ControllerBase
             ));
         }
     }
+
+    // Add to existing ConsultantController
+
+    // ═══════════════════════════════════════════════════════════
+    // GET: api/consultant/profile/{id}
+    // Public - Customer views consultant profile
+    // ═══════════════════════════════════════════════════════════
+    [HttpGet("profile/{id}")]
+    public async Task<IActionResult> GetConsultantProfile(int id)
+    {
+        try
+        {
+            var consultant = await _consultantService.GetConsultantPublicProfileAsync(id);
+            return Ok(consultant);
+        }
+        catch (InvalidOperationException ex)
+        {
+            return NotFound(new ErrorResponseDto(ex.Message, 404));
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(500, new ErrorResponseDto(
+                "Failed to retrieve consultant profile",
+                ex.Message,
+                500
+            ));
+        }
+    }
+
+    // ═══════════════════════════════════════════════════════════
+    // GET: api/consultant/approved
+    // Public - List all approved consultants
+    // ═══════════════════════════════════════════════════════════
+    [HttpGet("approved")]
+    public async Task<IActionResult> GetApprovedConsultants()
+    {
+        try
+        {
+            var consultants = await _consultantService.GetAllApprovedConsultantsAsync();
+            return Ok(consultants);
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(500, new ErrorResponseDto(
+                "Failed to retrieve consultants",
+                ex.Message,
+                500
+            ));
+        }
+    }
+
+    // ═══════════════════════════════════════════════════════════
+    // GET: api/consultant/specialization/{specializationId}
+    // Public - Filter consultants by specialization
+    // ═══════════════════════════════════════════════════════════
+    [HttpGet("specialization/{specializationId}")]
+    public async Task<IActionResult> GetConsultantsBySpecialization(int specializationId)
+    {
+        try
+        {
+            var consultants = await _consultantService.GetConsultantsBySpecializationAsync(specializationId);
+            return Ok(consultants);
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(500, new ErrorResponseDto(
+                "Failed to retrieve consultants",
+                ex.Message,
+                500
+            ));
+        }
+    }
 }

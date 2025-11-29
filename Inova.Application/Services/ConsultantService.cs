@@ -102,4 +102,37 @@ internal sealed class ConsultantService : IConsultantService
 
         return true;
     }
+
+
+    // GET CONSULTANT PUBLIC PROFILE (for customers)
+    public async Task<ConsultantPublicProfileDto> GetConsultantPublicProfileAsync(int id)
+    {
+        var consultant = await _consultantRepository.GetByIdAsync(id);
+
+        if (consultant == null)
+        {
+            throw new InvalidOperationException($"Consultant with ID {id} not found");
+        }
+
+        if (!consultant.IsApproved)
+        {
+            throw new InvalidOperationException("This consultant is not approved yet");
+        }
+
+        return consultant.ToPublicProfileDto();
+    }
+
+    // GET ALL APPROVED CONSULTANTS
+    public async Task<IEnumerable<ConsultantPublicProfileDto>> GetAllApprovedConsultantsAsync()
+    {
+        var consultants = await _consultantRepository.GetAllApprovedAsync();
+        return consultants.Select(c => c.ToPublicProfileDto());
+    }
+
+    // GET CONSULTANTS BY SPECIALIZATION
+    public async Task<IEnumerable<ConsultantPublicProfileDto>> GetConsultantsBySpecializationAsync(int specializationId)
+    {
+        var consultants = await _consultantRepository.GetBySpecializationIdAsync(specializationId);
+        return consultants.Select(c => c.ToPublicProfileDto());
+    }
 }

@@ -18,9 +18,7 @@ internal sealed class ChatService : IChatService
         _sessionRepository = sessionRepository;
     }
 
-  
     // SEND MESSAGE (with time-based access control)
-   
     public async Task<ChatMessageResponseDto> SendMessageAsync(
         SendMessageRequestDto dto,
         int senderId)
@@ -95,13 +93,14 @@ internal sealed class ChatService : IChatService
         // 9. Reload with sender info for response
         message = await _chatRepository.GetByIdAsync(message.Id);
 
-        // 10. Return DTO
-        return message.ToResponseDto();
+        // 10. Return DTO with names ← FIXED HERE!
+        return message.ToResponseDto(
+            session.Customer.FullName,
+            session.Consultant.FullName
+        );
     }
 
-   
     // GET SESSION MESSAGES (read-only access after session)
-   
     public async Task<IEnumerable<ChatMessageResponseDto>> GetSessionMessagesAsync(
         int sessionId,
         int userId)
@@ -127,13 +126,14 @@ internal sealed class ChatService : IChatService
         // 3. Get all messages for this session
         var messages = await _chatRepository.GetBySessionIdAsync(sessionId);
 
-        // 4. Convert to DTOs
-        return messages.Select(m => m.ToResponseDto());
+        // 4. Convert to DTOs with names ← FIXED HERE!
+        return messages.Select(m => m.ToResponseDto(
+            session.Customer.FullName,
+            session.Consultant.FullName
+        ));
     }
 
-    
     // MARK MESSAGE AS READ
- 
     public async Task<bool> MarkAsReadAsync(int messageId, int userId)
     {
         // 1. Get message
@@ -163,16 +163,13 @@ internal sealed class ChatService : IChatService
     }
 
     // GET UNREAD COUNT
-  
     public async Task<int> GetUnreadCountAsync(int userId)
     {
         var unreadMessages = await _chatRepository.GetUnreadByUserIdAsync(userId);
         return unreadMessages.Count();
     }
 
-  
     // REPORT SESSION (Bonus Feature)
-    
     public async Task<bool> ReportSessionAsync(
         int sessionId,
         ReportSessionRequestDto dto,

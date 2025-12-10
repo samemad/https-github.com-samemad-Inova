@@ -1,5 +1,5 @@
 ﻿namespace Inova.Application.DTOs.Category
-{
+
     public class CategoryCreateRequestDto
     {
         public string NameAr { get; set; }
@@ -10,4 +10,4 @@
         public string IconUrl { get; set; }
         
     }
-}
+

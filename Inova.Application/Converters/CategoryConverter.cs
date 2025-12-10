@@ -5,9 +5,7 @@ namespace Inova.Application.Converters;
 
 internal static class CategoryConverter
 {
-    
     // Direction 1: DTO → Entity (for CREATE)
-  
     public static Category ToEntity(this CategoryCreateRequestDto dto)
     {
         return new Category
@@ -21,9 +19,7 @@ internal static class CategoryConverter
             // ⚠️ Id is NOT set here - database will generate it
         };
     }
-
     // Direction 2: Entity → ResponseDTO (for READ)
-    
     public static CategoryResponseDto ToResponseDto(this Category entity)
     {
         return new CategoryResponseDto
@@ -42,7 +38,6 @@ internal static class CategoryConverter
             // ?? 0                   → If null, return 0
         };
     }
-
     // Direction 3: UpdateDTO → Entity (for UPDATE)
     public static void UpdateEntity(this CategoryUpdateRequestDto dto, Category entity)
     {
@@ -52,7 +47,6 @@ internal static class CategoryConverter
         entity.Description = dto.Description;
         entity.CoverImageUrl = dto.CoverImageUrl;
         entity.IconUrl = dto.IconUrl;
-
         // Note We DON'T update Id or CreatedAt!
     }
 }

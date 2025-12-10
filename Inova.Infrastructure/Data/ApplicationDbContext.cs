@@ -7,8 +7,7 @@ public class ApplicationDbContext : DbContext
 {
     public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
         : base(options)
-    {
-    }
+    
 
     // DbSets - ALL our tables
     public DbSet<User> Users { get; set; }

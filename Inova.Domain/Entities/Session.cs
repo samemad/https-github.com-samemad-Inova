@@ -5,8 +5,8 @@ public class Session
     public int Id { get; set; }
 
     // Foreign Keys
-    public int CustomerId { get; set; }
-    public Customer Customer { get; set; }
+    public int CustomerId { get; set; } // Foreign Key
+    public Customer Customer { get; set; } // Navigation Property
 
     public int ConsultantId { get; set; }
     public Consultant Consultant { get; set; }

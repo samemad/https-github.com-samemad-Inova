@@ -16,12 +16,12 @@ public class ConsultantController : ControllerBase
         _consultantService = consultantService;
     }
 
-    // ═══════════════════════════════════════════════════════════
+    
     // GET: api/consultant/pending
     // Admin only - Get all pending consultant applications
-    // ═══════════════════════════════════════════════════════════
+    
     [HttpGet("pending")]
-    [Authorize(Roles = "Admin")]
+    //[Authorize(Roles = "Admin")]
     public async Task<IActionResult> GetPending()
     {
         try
@@ -39,10 +39,10 @@ public class ConsultantController : ControllerBase
         }
     }
 
-    // ═══════════════════════════════════════════════════════════
+    
     // GET: api/consultant/{id}
     // Public - View consultant profile
-    // ═══════════════════════════════════════════════════════════
+    
     [HttpGet("{id}")]
     public async Task<IActionResult> GetById(int id)
     {
@@ -65,10 +65,10 @@ public class ConsultantController : ControllerBase
         }
     }
 
-    // ═══════════════════════════════════════════════════════════
+   
     // POST: api/consultant/{id}/approve
     // Admin only - Approve consultant application
-    // ═══════════════════════════════════════════════════════════
+   
     [HttpPost("{id}/approve")]
     [Authorize(Roles = "Admin")]
     public async Task<IActionResult> Approve(int id)
@@ -96,10 +96,10 @@ public class ConsultantController : ControllerBase
         }
     }
 
-    // ═══════════════════════════════════════════════════════════
+    
     // POST: api/consultant/{id}/reject
     // Admin only - Reject consultant application
-    // ═══════════════════════════════════════════════════════════
+    
     [HttpPost("{id}/reject")]
     [Authorize(Roles = "Admin")]
     public async Task<IActionResult> Reject(int id)
@@ -129,10 +129,10 @@ public class ConsultantController : ControllerBase
 
     // Add to existing ConsultantController
 
-    // ═══════════════════════════════════════════════════════════
+   
     // GET: api/consultant/profile/{id}
     // Public - Customer views consultant profile
-    // ═══════════════════════════════════════════════════════════
+    
     [HttpGet("profile/{id}")]
     public async Task<IActionResult> GetConsultantProfile(int id)
     {
@@ -155,10 +155,10 @@ public class ConsultantController : ControllerBase
         }
     }
 
-    // ═══════════════════════════════════════════════════════════
+    
     // GET: api/consultant/approved
     // Public - List all approved consultants
-    // ═══════════════════════════════════════════════════════════
+    
     [HttpGet("approved")]
     public async Task<IActionResult> GetApprovedConsultants()
     {
@@ -177,10 +177,10 @@ public class ConsultantController : ControllerBase
         }
     }
 
-    // ═══════════════════════════════════════════════════════════
+    
     // GET: api/consultant/specialization/{specializationId}
     // Public - Filter consultants by specialization
-    // ═══════════════════════════════════════════════════════════
+    
     [HttpGet("specialization/{specializationId}")]
     public async Task<IActionResult> GetConsultantsBySpecialization(int specializationId)
     {

@@ -8,5 +8,5 @@ public class User
     public string Role { get; set; }  // "Customer", "Consultant", "Admin"
     public string? ProfileImageUrl { get; set; }
     public DateTime CreatedAt { get; set; }
-    public bool IsActive { get; set; }  // ← ADD THIS LINE IF MISSING!
+    public bool IsActive { get; set; }  
 }

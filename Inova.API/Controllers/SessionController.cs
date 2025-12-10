@@ -19,10 +19,10 @@ public class SessionController : ControllerBase
         _sessionService = sessionService;
     }
 
-    // ═══════════════════════════════════════════════════════════
+    
     // POST: api/session/book
     // Customer books a session
-    // ═══════════════════════════════════════════════════════════
+    
     [HttpPost("book")]
     [Authorize(Roles = "Customer")]
     public async Task<IActionResult> BookSession([FromBody] BookSessionRequestDto dto)
@@ -55,10 +55,10 @@ public class SessionController : ControllerBase
         }
     }
 
-    // ═══════════════════════════════════════════════════════════
+    
     // GET: api/session/my-sessions
     // Customer views their sessions
-    // ═══════════════════════════════════════════════════════════
+   
     [HttpGet("my-sessions")]
     [Authorize(Roles = "Customer")]
     public async Task<IActionResult> GetMySessions()
@@ -86,10 +86,10 @@ public class SessionController : ControllerBase
         }
     }
 
-    // ═══════════════════════════════════════════════════════════
+    
     // POST: api/session/{id}/cancel
     // Customer cancels their session
-    // ═══════════════════════════════════════════════════════════
+    
     [HttpPost("{id}/cancel")]
     [Authorize(Roles = "Customer")]
     public async Task<IActionResult> CancelSession(int id)
@@ -125,10 +125,10 @@ public class SessionController : ControllerBase
         }
     }
 
-    // ═══════════════════════════════════════════════════════════
+   
     // GET: api/session/consultant/sessions
     // Consultant views all their sessions
-    // ═══════════════════════════════════════════════════════════
+   
     [HttpGet("consultant/sessions")]
     [Authorize(Roles = "Consultant")]
     public async Task<IActionResult> GetConsultantSessions()
@@ -156,10 +156,10 @@ public class SessionController : ControllerBase
         }
     }
 
-    // ═══════════════════════════════════════════════════════════
+   
     // GET: api/session/consultant/pending
     // Consultant views pending sessions only
-    // ═══════════════════════════════════════════════════════════
+    
     [HttpGet("consultant/pending")]
     [Authorize(Roles = "Consultant")]
     public async Task<IActionResult> GetPendingSessions()
@@ -187,10 +187,10 @@ public class SessionController : ControllerBase
         }
     }
 
-    // ═══════════════════════════════════════════════════════════
+   
     // POST: api/session/{id}/accept
     // Consultant accepts a session
-    // ═══════════════════════════════════════════════════════════
+    
     [HttpPost("{id}/accept")]
     [Authorize(Roles = "Consultant")]
     public async Task<IActionResult> AcceptSession(int id)
@@ -226,10 +226,10 @@ public class SessionController : ControllerBase
         }
     }
 
-    // ═══════════════════════════════════════════════════════════
+    
     // POST: api/session/{id}/deny
     // Consultant denies a session
-    // ═══════════════════════════════════════════════════════════
+   
     [HttpPost("{id}/deny")]
     [Authorize(Roles = "Consultant")]
     public async Task<IActionResult> DenySession(int id)
@@ -265,10 +265,10 @@ public class SessionController : ControllerBase
         }
     }
 
-    // ═══════════════════════════════════════════════════════════
+    
     // GET: api/session/{id}
     // Get session details by ID
-    // ═══════════════════════════════════════════════════════════
+   
     [HttpGet("{id}")]
     public async Task<IActionResult> GetById(int id)
     {

@@ -17,10 +17,10 @@ public class CategoryController : ControllerBase
         _categoryService = categoryService;
     }
 
-    // ═══════════════════════════════════════════════════════════
+    
     // GET: api/category
     // Public - Anyone can view categories
-    // ═══════════════════════════════════════════════════════════
+    
     [HttpGet]
     public async Task<IActionResult> GetAll()
     {
@@ -39,10 +39,10 @@ public class CategoryController : ControllerBase
         }
     }
 
-    // ═══════════════════════════════════════════════════════════
+    
     // GET: api/category/{id}
     // Public - Anyone can view a specific category
-    // ═══════════════════════════════════════════════════════════
+    
     [HttpGet("{id}")]
     public async Task<IActionResult> GetById(int id)
     {
@@ -65,10 +65,10 @@ public class CategoryController : ControllerBase
         }
     }
 
-    // ═══════════════════════════════════════════════════════════
+    
     // POST: api/category
     // Admin only - Create new category
-    // ═══════════════════════════════════════════════════════════
+    
     [HttpPost]
     [Authorize(Roles = "Admin")]  // ← Only admins can create
     public async Task<IActionResult> Create([FromBody] CategoryCreateRequestDto dto)
@@ -96,10 +96,10 @@ public class CategoryController : ControllerBase
         }
     }
 
-    // ═══════════════════════════════════════════════════════════
+   
     // PUT: api/category/{id}
     // Admin only - Update existing category
-    // ═══════════════════════════════════════════════════════════
+    
     [HttpPut("{id}")]
     [Authorize(Roles = "Admin")]  // ← Only admins can update
     public async Task<IActionResult> Update(int id, [FromBody] CategoryUpdateRequestDto dto)
@@ -133,10 +133,10 @@ public class CategoryController : ControllerBase
         }
     }
 
-    // ═══════════════════════════════════════════════════════════
+    
     // DELETE: api/category/{id}
     // Admin only - Delete category
-    // ═══════════════════════════════════════════════════════════
+   
     [HttpDelete("{id}")]
     [Authorize(Roles = "Admin")]  // ← Only admins can delete
     public async Task<IActionResult> Delete(int id)

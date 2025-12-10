@@ -17,10 +17,10 @@ public class SpecializationController : ControllerBase
         _specializationService = specializationService;
     }
 
-    // ═══════════════════════════════════════════════════════════
+    
     // GET: api/specialization
     // Public - Anyone can view specializations
-    // ═══════════════════════════════════════════════════════════
+    
     [HttpGet]
     public async Task<IActionResult> GetAll()
     {
@@ -39,10 +39,10 @@ public class SpecializationController : ControllerBase
         }
     }
 
-    // ═══════════════════════════════════════════════════════════
+    
     // GET: api/specialization/{id}
     // Public - Anyone can view a specific specialization
-    // ═══════════════════════════════════════════════════════════
+    
     [HttpGet("{id}")]
     public async Task<IActionResult> GetById(int id)
     {
@@ -65,10 +65,10 @@ public class SpecializationController : ControllerBase
         }
     }
 
-    // ═══════════════════════════════════════════════════════════
+    
     // GET: api/specialization/category/{categoryId}
     // Public - Filter specializations by category
-    // ═══════════════════════════════════════════════════════════
+   
     [HttpGet("category/{categoryId}")]
     public async Task<IActionResult> GetByCategory(int categoryId)
     {
@@ -91,10 +91,10 @@ public class SpecializationController : ControllerBase
         }
     }
 
-    // ═══════════════════════════════════════════════════════════
+    
     // POST: api/specialization
     // Admin only - Create new specialization
-    // ═══════════════════════════════════════════════════════════
+    
     [HttpPost]
     [Authorize(Roles = "Admin")]
     public async Task<IActionResult> Create([FromBody] SpecializationCreateDto dto)
@@ -122,10 +122,10 @@ public class SpecializationController : ControllerBase
         }
     }
 
-    // ═══════════════════════════════════════════════════════════
+    
     // PUT: api/specialization/{id}
     // Admin only - Update existing specialization
-    // ═══════════════════════════════════════════════════════════
+    
     [HttpPut("{id}")]
     [Authorize(Roles = "Admin")]
     public async Task<IActionResult> Update(int id, [FromBody] SpecializationUpdateRequestDto dto)
@@ -158,10 +158,10 @@ public class SpecializationController : ControllerBase
         }
     }
 
-    // ═══════════════════════════════════════════════════════════
+    
     // DELETE: api/specialization/{id}
     // Admin only - Delete specialization
-    // ═══════════════════════════════════════════════════════════
+     
     [HttpDelete("{id}")]
     [Authorize(Roles = "Admin")]
     public async Task<IActionResult> Delete(int id)

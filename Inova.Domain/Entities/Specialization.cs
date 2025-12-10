@@ -12,7 +12,7 @@ public class Specialization
     public string NameEn { get; set; } //  English Name
     public string Description { get; set; }
 
-    // 📸 ADD THIS
+    
     public string IconUrl { get; set; }  // Cloudinary URL for specialization icon
 
     public DateTime CreatedAt { get; set; }

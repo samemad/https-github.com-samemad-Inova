@@ -15,9 +15,9 @@ internal sealed class PaymentService : IPaymentService
         _paymentRepository = paymentRepository;
     }
 
-    // ═══════════════════════════════════════════════════════════
+     
     // HOLD PAYMENT (Create and hold the amount)
-    // ═══════════════════════════════════════════════════════════
+     
     public async Task<PaymentResponseDto> HoldPaymentAsync(int sessionId, decimal amount)
     {
         // 1. Validate amount

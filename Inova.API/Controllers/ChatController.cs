@@ -19,10 +19,10 @@ public class ChatController : ControllerBase
         _chatService = chatService;
     }
 
-    // ═══════════════════════════════════════════════════════════
+    
     // POST: api/chat/send
     // Send a message (Customer or Consultant)
-    // ═══════════════════════════════════════════════════════════
+    
     [HttpPost("send")]
     [Authorize(Roles = "Customer,Consultant")]
     public async Task<IActionResult> SendMessage([FromBody] SendMessageRequestDto dto)
@@ -59,10 +59,10 @@ public class ChatController : ControllerBase
         }
     }
 
-    // ═══════════════════════════════════════════════════════════
+    
     // GET: api/chat/session/{sessionId}
     // Get all messages for a session
-    // ═══════════════════════════════════════════════════════════
+    
     [HttpGet("session/{sessionId}")]
     [Authorize(Roles = "Customer,Consultant")]
     public async Task<IActionResult> GetSessionMessages(int sessionId)
@@ -98,10 +98,10 @@ public class ChatController : ControllerBase
         }
     }
 
-    // ═══════════════════════════════════════════════════════════
+ 
     // POST: api/chat/{messageId}/mark-read
     // Mark a message as read
-    // ═══════════════════════════════════════════════════════════
+    
     [HttpPost("{messageId}/mark-read")]
     [Authorize(Roles = "Customer,Consultant")]
     public async Task<IActionResult> MarkAsRead(int messageId)
@@ -137,10 +137,10 @@ public class ChatController : ControllerBase
         }
     }
 
-    // ═══════════════════════════════════════════════════════════
+   
     // GET: api/chat/unread-count
     // Get unread message count for current user
-    // ═══════════════════════════════════════════════════════════
+   
     [HttpGet("unread-count")]
     [Authorize(Roles = "Customer,Consultant")]
     public async Task<IActionResult> GetUnreadCount()
@@ -168,10 +168,10 @@ public class ChatController : ControllerBase
         }
     }
 
-    // ═══════════════════════════════════════════════════════════
+    
     // POST: api/chat/session/{sessionId}/report
     // Report a session (Bonus Feature)
-    // ═══════════════════════════════════════════════════════════
+    
     [HttpPost("session/{sessionId}/report")]
     [Authorize(Roles = "Customer,Consultant")]
     public async Task<IActionResult> ReportSession(

@@ -16,7 +16,7 @@ internal static class CategoryConverter
             CoverImageUrl = dto.CoverImageUrl,
             IconUrl = dto.IconUrl,
             CreatedAt = DateTime.UtcNow  // ← Auto-set timestamp
-            // ⚠️ Id is NOT set here - database will generate it
+            // Focus Id is NOT set here - database will generate it
         };
     }
     // Direction 2: Entity → ResponseDTO (for READ)

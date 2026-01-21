@@ -8,6 +8,7 @@ namespace Inova.Application.Services;
 internal sealed class CategoryService : ICategoryService
 {
     private readonly ICategoryRepository _categoryRepository;
+    private readonly IreposRepository _irepoBase
 
     public CategoryService(ICategoryRepository categoryRepository)
     {
